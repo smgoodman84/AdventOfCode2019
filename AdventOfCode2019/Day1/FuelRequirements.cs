@@ -32,5 +32,31 @@ namespace AdventOfCode2019.Day1
         {
             return (moduleMass / 3) - 2;
         }
+
+        public int GetFuelRequirementsWithFuelForFuel()
+        {
+            return _moduleMasses
+                .Select(GetFuelRequirementWithFuelForFuel)
+                .Sum();
+        }
+
+        private int GetFuelRequirementWithFuelForFuel(int moduleMass)
+        {
+            var totalFuelMass = GetFuelRequirement(moduleMass);
+
+            var unfueledMass = totalFuelMass;
+            while (true)
+            {
+                unfueledMass = GetFuelRequirement(unfueledMass);
+                if (unfueledMass <= 0)
+                {
+                    break;
+                }
+
+                totalFuelMass += unfueledMass;
+            }
+
+            return totalFuelMass;
+        }
     }
 }

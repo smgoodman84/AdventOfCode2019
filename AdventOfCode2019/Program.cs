@@ -10,6 +10,9 @@ namespace AdventOfCode2019
             var fuelRequirements = FuelRequirements.LoadFromFile("Day1/ModuleMasses.txt").GetFuelRequirements();
             Console.WriteLine($"Day 1 Part 1: {fuelRequirements}");
 
+            var totalFuelRequirements = FuelRequirements.LoadFromFile("Day1/ModuleMasses.txt").GetFuelRequirementsWithFuelForFuel();
+            Console.WriteLine($"Day 1 Part 2: {totalFuelRequirements}");
+
             Console.ReadKey();
         }
     }
