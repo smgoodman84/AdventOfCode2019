@@ -9,15 +9,19 @@ namespace AdventOfCode2019.Day2
     {
         public static Intcode LoadFromFile(string filename)
         {
-            var memory = File.ReadAllLines(filename)
-                .First()
-                .Split(",")
-                .Select(int.Parse)
-                .ToArray();
+            var memory = LoadMemoryFromFile(filename);
 
             return new Intcode(memory);
         }
 
+        private static int[] LoadMemoryFromFile(string filename)
+        {
+            return File.ReadAllLines(filename)
+                .First()
+                .Split(",")
+                .Select(int.Parse)
+                .ToArray();
+        }
 
         private int[] _memory;
         private int _programCounter = 0;
@@ -81,6 +85,30 @@ namespace AdventOfCode2019.Day2
             _memory[cPointer] = _memory[aPointer] * _memory[bPointer];
 
             _programCounter += 4;
+        }
+
+        public static int FindNounAndVerb(string filename, int targetResult)
+        {
+            var memory = LoadMemoryFromFile(filename);
+
+            for (var noun = 0; noun < 100; noun++)
+            {
+                for (var verb = 0; verb < 100; verb++)
+                {
+                    var result = new Intcode(memory.ToArray())
+                        .Repair(1, noun)
+                        .Repair(2, verb)
+                        .Execute()
+                        .ReadMemory(0);
+
+                    if (result == targetResult)
+                    {
+                        return (100 * noun) + verb;
+                    }
+                }
+            }
+
+            return -1;
         }
     }
 }

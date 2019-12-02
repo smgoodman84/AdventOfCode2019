@@ -17,6 +17,9 @@ namespace AdventOfCode2019
             var day2Part1Result = Intcode.LoadFromFile("Day2/GravityAssistProgram.txt").Repair(1, 12).Repair(2, 2).Execute().ReadMemory(0);
             Console.WriteLine($"Day 2 Part 1: {day2Part1Result}");
 
+            var day2Part2Result = Intcode.FindNounAndVerb("Day2/GravityAssistProgram.txt", 19690720);
+            Console.WriteLine($"Day 2 Part 2: {day2Part2Result}");
+
             Console.ReadKey();
         }
     }
