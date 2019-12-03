@@ -1,6 +1,7 @@
 ﻿using System;
 using AdventOfCode2019.Day1;
 using AdventOfCode2019.Day2;
+using AdventOfCode2019.Day3;
 
 namespace AdventOfCode2019
 {
@@ -19,6 +20,9 @@ namespace AdventOfCode2019
 
             var day2Part2Result = Intcode.FindNounAndVerb("Day2/GravityAssistProgram.txt", 19690720);
             Console.WriteLine($"Day 2 Part 2: {day2Part2Result}");
+
+            var day3Part1Result = WireList.LoadFromFile("Day3/Wires.txt").FindClosestIntersection(0, 1);
+            Console.WriteLine($"Day 3 Part 1: {day3Part1Result}");
 
             Console.ReadKey();
         }
