@@ -34,7 +34,10 @@ namespace AdventOfCode2019
             var day4Part2Result = PasswordCracker.GetPossiblePasswordsWithDigitPair("152085-670283");
             Console.WriteLine($"Day 4 Part 2: {day4Part2Result}");
 
-            Console.WriteLine("Running program for Day 5 Part 1");
+            Console.WriteLine("Running program for Day 5 Part 1 - Input should be 1");
+            AdventOfCode2019.Day5.Intcode.LoadFromFile("Day5/Diagnostics.txt").Execute();
+
+            Console.WriteLine("Running program for Day 5 Part 2 - Input should be 5");
             AdventOfCode2019.Day5.Intcode.LoadFromFile("Day5/Diagnostics.txt").Execute();
 
             Console.ReadKey();

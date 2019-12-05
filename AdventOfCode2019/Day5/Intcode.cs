@@ -41,6 +41,10 @@ namespace AdventOfCode2019.Day5
                 {2, Multiply },
                 {3, Input },
                 {4, Output },
+                {5, JumpIfTrue },
+                {6, JumpIfFalse },
+                {7, LessThan },
+                {8, Equals },
             };
         }
 
@@ -152,6 +156,58 @@ namespace AdventOfCode2019.Day5
             Console.WriteLine($"Output: {ReadParameter(1)}");
 
             _programCounter += 2;
+        }
+
+        private void JumpIfTrue()
+        {
+            if (ReadParameter(1) != 0)
+            {
+                _programCounter = ReadParameter(2);
+            }
+            else
+            {
+                _programCounter += 3;
+            }
+        }
+
+        private void JumpIfFalse()
+        {
+            if (ReadParameter(1) == 0)
+            {
+                _programCounter = ReadParameter(2);
+            }
+            else
+            {
+                _programCounter += 3;
+            }
+        }
+
+        private void LessThan()
+        {
+            if (ReadParameter(1) < ReadParameter(2))
+            {
+                WriteParameter(3, 1);
+            }
+            else
+            {
+                WriteParameter(3, 0);
+            }
+
+            _programCounter += 4;
+        }
+
+        private void Equals()
+        {
+            if (ReadParameter(1) == ReadParameter(2))
+            {
+                WriteParameter(3, 1);
+            }
+            else
+            {
+                WriteParameter(3, 0);
+            }
+
+            _programCounter += 4;
         }
 
         public static int FindNounAndVerb(string filename, int targetResult)
