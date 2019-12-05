@@ -31,6 +31,9 @@ namespace AdventOfCode2019
             var day4Part1Result = PasswordCracker.GetPossiblePasswords("152085-670283");
             Console.WriteLine($"Day 4 Part 1: {day4Part1Result}");
 
+            var day4Part2Result = PasswordCracker.GetPossiblePasswordsWithDigitPair("152085-670283");
+            Console.WriteLine($"Day 4 Part 2: {day4Part2Result}");
+
             Console.ReadKey();
         }
     }

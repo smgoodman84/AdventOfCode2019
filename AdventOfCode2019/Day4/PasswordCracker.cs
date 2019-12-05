@@ -1,10 +1,21 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventOfCode2019.Day4
 {
     class PasswordCracker
     {
         public static int GetPossiblePasswords(string passwordRange)
+        {
+            return GetPossiblePasswords(passwordRange, AdjacentDigitsMatch);
+        }
+        public static int GetPossiblePasswordsWithDigitPair(string passwordRange)
+        {
+            return GetPossiblePasswords(passwordRange, ContainsDigitPair);
+        }
+
+        public static int GetPossiblePasswords(string passwordRange, Func<int[], bool> adjacentDigitsFunc)
         {
             var range = passwordRange
                 .Split('-')
@@ -17,7 +28,7 @@ namespace AdventOfCode2019.Day4
             var possiblePasswords = Enumerable
                 .Range(min, max - min + 1)
                 .Select(GetChars)
-                .Where(AdjacentDigitsMatch)
+                .Where(adjacentDigitsFunc)
                 .Where(DigitsIncrease)
                 .Count();
 
@@ -38,6 +49,25 @@ namespace AdventOfCode2019.Day4
             }
 
             return false;
+        }
+
+        private static bool ContainsDigitPair(int[] input)
+        {
+            var runs = new Dictionary<int, int>();
+
+            foreach(var c in input)
+            {
+                if (!runs.ContainsKey(c))
+                {
+                    runs.Add(c, 1);
+                }
+                else
+                {
+                    runs[c] +=  1;
+                }
+            }
+
+            return runs.Any(x => x.Value == 2);
         }
 
         private static bool DigitsIncrease(int[] input)
