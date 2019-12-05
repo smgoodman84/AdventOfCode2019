@@ -2,6 +2,7 @@
 using AdventOfCode2019.Day1;
 using AdventOfCode2019.Day2;
 using AdventOfCode2019.Day3;
+using AdventOfCode2019.Day4;
 
 namespace AdventOfCode2019
 {
@@ -26,6 +27,9 @@ namespace AdventOfCode2019
 
             var day3Part2Result = WireList.LoadFromFile("Day3/Wires.txt").FindClosestSignalIntersection(0, 1);
             Console.WriteLine($"Day 3 Part 2: {day3Part2Result}");
+
+            var day4Part1Result = PasswordCracker.GetPossiblePasswords("152085-670283");
+            Console.WriteLine($"Day 4 Part 1: {day4Part1Result}");
 
             Console.ReadKey();
         }
