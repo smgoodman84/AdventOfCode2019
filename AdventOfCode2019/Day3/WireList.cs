@@ -29,7 +29,19 @@ namespace AdventOfCode2019.Day3
 
             var intersections = wire0.GetIntersections(wire1).ToList();
 
-            var result = intersections.Min(c => c.ManhattenDistanceFromOrigin());
+            var result = intersections.Min(c => c.Key.ManhattenDistanceFromOrigin());
+
+            return result;
+        }
+
+        public int FindClosestSignalIntersection(int firstWireIndex, int secondWireIndex)
+        {
+            var wire0 = _wires[firstWireIndex];
+            var wire1 = _wires[secondWireIndex];
+
+            var intersections = wire0.GetIntersections(wire1).ToList();
+
+            var result = intersections.Min(c => c.Value);
 
             return result;
         }
@@ -65,29 +77,36 @@ namespace AdventOfCode2019.Day3
                 return coordinates;
             }
 
-            public IEnumerable<Coordinate> GetIntersections(Wire wire)
+            public IEnumerable<KeyValuePair<Coordinate, int>> GetIntersections(Wire wire)
             {
-                var locationDictionary = new Dictionary<int, Dictionary<int, bool>>();
+                var locationDictionary = new Dictionary<int, Dictionary<int, int>>();
+                var signalDelay = 1;
                 foreach (var location in Locations)
                 {
                     if (!locationDictionary.ContainsKey(location.X))
                     {
-                        locationDictionary.Add(location.X, new Dictionary<int, bool>());
+                        locationDictionary.Add(location.X, new Dictionary<int, int>());
                     }
 
                     if (!locationDictionary[location.X].ContainsKey(location.Y))
                     {
-                        locationDictionary[location.X].Add(location.Y, true);
+                        locationDictionary[location.X].Add(location.Y, signalDelay);
                     }
+
+                    signalDelay += 1;
                 }
 
+                signalDelay = 1;
                 foreach (var location in wire.Locations)
                 {
                     if (locationDictionary.ContainsKey(location.X)
                         && locationDictionary[location.X].ContainsKey(location.Y))
                     {
-                        yield return location;
+                        var thisSignalDelay = locationDictionary[location.X][location.Y];
+                        yield return KeyValuePair.Create(location, signalDelay + thisSignalDelay);
                     }
+
+                    signalDelay += 1;
                 }
             }
         }

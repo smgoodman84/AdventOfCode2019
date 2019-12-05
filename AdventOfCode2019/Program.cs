@@ -24,6 +24,9 @@ namespace AdventOfCode2019
             var day3Part1Result = WireList.LoadFromFile("Day3/Wires.txt").FindClosestIntersection(0, 1);
             Console.WriteLine($"Day 3 Part 1: {day3Part1Result}");
 
+            var day3Part2Result = WireList.LoadFromFile("Day3/Wires.txt").FindClosestSignalIntersection(0, 1);
+            Console.WriteLine($"Day 3 Part 2: {day3Part2Result}");
+
             Console.ReadKey();
         }
     }
