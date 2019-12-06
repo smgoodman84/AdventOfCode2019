@@ -3,6 +3,7 @@ using AdventOfCode2019.Day1;
 using AdventOfCode2019.Day2;
 using AdventOfCode2019.Day3;
 using AdventOfCode2019.Day4;
+using AdventOfCode2019.Day6;
 
 namespace AdventOfCode2019
 {
@@ -39,6 +40,9 @@ namespace AdventOfCode2019
 
             Console.WriteLine("Running program for Day 5 Part 2 - Input should be 5");
             AdventOfCode2019.Day5.Intcode.LoadFromFile("Day5/Diagnostics.txt").Execute();
+
+            var day6Part1Result = OrbitMap.LoadFromFile("Day6/Orbits.txt").CountOrbits();
+            Console.WriteLine($"Day 6 Part 1: {day6Part1Result}");
 
             Console.ReadKey();
         }
