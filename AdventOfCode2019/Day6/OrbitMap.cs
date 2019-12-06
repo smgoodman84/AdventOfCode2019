@@ -26,6 +26,34 @@ namespace AdventOfCode2019.Day6
             return new OrbitCounter(_orbits).GetOrbitCount();
         }
 
+        public int CalculateOrbitalTransfers(string start, string end)
+        {
+            var orbiterDictionary = _orbits.ToDictionary(o => o.Orbiter, o => o.Orbited);
+            var startPath = GetPath(orbiterDictionary, start);
+            var endPath = GetPath(orbiterDictionary, end);
+
+            var commonPath = new List<string>();
+            var index = 0;
+            while (startPath[index] == endPath[index])
+            {
+                commonPath.Add(startPath[index]);
+                index += 1;
+            }
+
+            return startPath.Length + endPath.Length - (commonPath.Count() * 2);
+        }
+
+        private string[] GetPath(Dictionary<string,string> orbiterDictionary, string location)
+        {
+            var path = new List<string>();
+            while (orbiterDictionary.ContainsKey(location))
+            {
+                location = orbiterDictionary[location];
+                path.Add(location);
+            }
+            return path.ToArray().Reverse().ToArray();
+        }
+
         private class OrbitCounter
         {
             private Dictionary<string, List<string>> _orbitTree;

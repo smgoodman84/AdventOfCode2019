@@ -43,6 +43,9 @@ namespace AdventOfCode2019
 
             var day6Part1Result = OrbitMap.LoadFromFile("Day6/Orbits.txt").CountOrbits();
             Console.WriteLine($"Day 6 Part 1: {day6Part1Result}");
+            
+            var day6Part2Result = OrbitMap.LoadFromFile("Day6/Orbits.txt").CalculateOrbitalTransfers("YOU", "SAN");
+            Console.WriteLine($"Day 6 Part 2: {day6Part2Result}");
 
             Console.ReadKey();
         }
