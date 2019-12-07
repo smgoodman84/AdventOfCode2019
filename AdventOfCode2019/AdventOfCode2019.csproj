@@ -22,4 +22,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Day7\" />
+    <Folder Include="Day7\Intcode\" />
+  </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@ using AdventOfCode2019.Day2;
 using AdventOfCode2019.Day3;
 using AdventOfCode2019.Day4;
 using AdventOfCode2019.Day6;
+using AdventOfCode2019.Day7;
 
 namespace AdventOfCode2019
 {
@@ -46,6 +47,9 @@ namespace AdventOfCode2019
             
             var day6Part2Result = OrbitMap.LoadFromFile("Day6/Orbits.txt").CalculateOrbitalTransfers("YOU", "SAN");
             Console.WriteLine($"Day 6 Part 2: {day6Part2Result}");
+
+            var day7Part1Result = SignalMaximizer.GetMaximumThrustSignal();
+            Console.WriteLine($"Day 7 Part 1: {day7Part1Result}");
 
             Console.ReadKey();
         }
