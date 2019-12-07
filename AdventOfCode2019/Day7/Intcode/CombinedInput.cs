@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace AdventOfCode2019.Day7
 {
@@ -12,7 +12,7 @@ namespace AdventOfCode2019.Day7
             _inputs = inputs;
         }
 
-        public int ReadInput()
+        public Task<int> ReadInput()
         {
             var result = _inputs[index].ReadInput();
 

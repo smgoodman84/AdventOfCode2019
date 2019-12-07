@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventOfCode2019.Day7
 {
@@ -57,12 +58,81 @@ namespace AdventOfCode2019.Day7
 
             foreach (var amplifier in amplifiers)
             {
-                amplifier.Execute();
+                amplifier.Execute().Wait();
             }
 
-            var result = pipe.ReadInput();
+            var result = pipe.ReadInput().Result;
 
             return result;
+        }
+
+        public static async Task<int> GetMaximumFeedbackThrustSignal(List<int> inputs = null)
+        {
+            if (inputs == null)
+            {
+                return await GetMaximumFeedbackThrustSignal(new List<int>());
+            }
+
+            if (inputs.Count == 5)
+            {
+                return await GetFeedbackThrustSignal(inputs.ToArray());
+            }
+
+            var max = 0;
+            foreach (var i in Enumerable.Range(5, 5).Where(x => !inputs.Contains(x)))
+            {
+                var nextInput = inputs.ToList();
+                nextInput.Add(i);
+
+                var result = await GetMaximumFeedbackThrustSignal(nextInput);
+                if (result > max)
+                {
+                    max = result;
+                }
+            }
+
+            return max;
+        }
+
+        private static async Task<int> GetFeedbackThrustSignal(params int[] phaseSettingInputs)
+        {
+            var amplifiers = phaseSettingInputs
+                .Select(x => Intcode.LoadFromFile("Day7/AmplifierControllerSoftware.txt"))
+                .ToArray();
+
+            var phaseSettings = new PreparedInput(phaseSettingInputs);
+
+            var pipes = phaseSettingInputs
+                .Select(InitialisedPipe)
+                .ToArray();
+
+            pipes[0].Output(0);
+
+            var pipeIndex = 0;
+            foreach (var amplifier in amplifiers)
+            {
+                amplifier.SetInput(pipes[pipeIndex]);
+                pipeIndex += 1;
+                if (pipeIndex >= phaseSettingInputs.Length)
+                {
+                    pipeIndex = 0;
+                }
+                amplifier.SetOutput(pipes[pipeIndex]);
+            }
+
+            var tasks = amplifiers.Select(a => a.Execute());
+            await Task.WhenAll(tasks);
+
+            var result = await pipes[0].ReadInput();
+
+            return result;
+        }
+
+        private static IOPipe InitialisedPipe(int initialisedValue)
+        {
+            var pipe = new IOPipe();
+            pipe.Output(initialisedValue);
+            return pipe;
         }
     }
 }

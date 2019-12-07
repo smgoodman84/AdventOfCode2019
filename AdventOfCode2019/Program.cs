@@ -18,10 +18,10 @@ namespace AdventOfCode2019
             var totalFuelRequirements = FuelRequirements.LoadFromFile("Day1/ModuleMasses.txt").GetFuelRequirementsWithFuelForFuel();
             Console.WriteLine($"Day 1 Part 2: {totalFuelRequirements}");
 
-            var day2Part1Result = Intcode.LoadFromFile("Day2/GravityAssistProgram.txt").Repair(1, 12).Repair(2, 2).Execute().ReadMemory(0);
+            var day2Part1Result = Day2.Intcode.LoadFromFile("Day2/GravityAssistProgram.txt").Repair(1, 12).Repair(2, 2).Execute().ReadMemory(0);
             Console.WriteLine($"Day 2 Part 1: {day2Part1Result}");
 
-            var day2Part2Result = Intcode.FindNounAndVerb("Day2/GravityAssistProgram.txt", 19690720);
+            var day2Part2Result = Day2.Intcode.FindNounAndVerb("Day2/GravityAssistProgram.txt", 19690720);
             Console.WriteLine($"Day 2 Part 2: {day2Part2Result}");
 
             var day3Part1Result = WireList.LoadFromFile("Day3/Wires.txt").FindClosestIntersection(0, 1);
@@ -50,6 +50,9 @@ namespace AdventOfCode2019
 
             var day7Part1Result = SignalMaximizer.GetMaximumThrustSignal();
             Console.WriteLine($"Day 7 Part 1: {day7Part1Result}");
+                      
+            var day7Part2Result = SignalMaximizer.GetMaximumFeedbackThrustSignal().Result;
+            Console.WriteLine($"Day 7 Part 2: {day7Part2Result}");
 
             Console.ReadKey();
         }

@@ -1,7 +1,9 @@
-﻿namespace AdventOfCode2019.Day7
+﻿using System.Threading.Tasks;
+
+namespace AdventOfCode2019.Day7
 {
     public interface IInput
     {
-        int ReadInput();
+        Task<int> ReadInput();
     }
 }

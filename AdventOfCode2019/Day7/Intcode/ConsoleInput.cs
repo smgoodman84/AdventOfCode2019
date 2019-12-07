@@ -1,10 +1,12 @@
 ﻿using System;
 
+using System.Threading.Tasks;
+
 namespace AdventOfCode2019.Day7
 {
     public class ConsoleInput : IInput
     {
-        public int ReadInput()
+        public Task<int> ReadInput()
         {
             string inputString;
             int input;
@@ -14,7 +16,7 @@ namespace AdventOfCode2019.Day7
                 inputString = Console.ReadLine();
             } while (!int.TryParse(inputString, out input));
 
-            return input;
+            return Task.FromResult(input);
         }
     }
 }

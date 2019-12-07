@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventOfCode2019.Day7
 {
@@ -29,7 +30,7 @@ namespace AdventOfCode2019.Day7
         private int[] _memory;
         private int _programCounter = 0;
         private int[] _parameterModes = new int[3];
-        private Dictionary<int, Action> _operations;
+        private Dictionary<int, Func<Task>> _operations;
         private IInput _input = new ConsoleInput();
         private IOutput _output = new ConsoleOutput();
 
@@ -37,7 +38,7 @@ namespace AdventOfCode2019.Day7
         {
             _memory = memory;
 
-            _operations = new Dictionary<int, Action>
+            _operations = new Dictionary<int, Func<Task>>
             {
                 {1, Add },
                 {2, Multiply },
@@ -102,7 +103,7 @@ namespace AdventOfCode2019.Day7
             }
         }
 
-        public Intcode Execute()
+        public async Task<Intcode> Execute()
         {
             while (true)
             {
@@ -112,7 +113,7 @@ namespace AdventOfCode2019.Day7
                     break;
                 }
 
-                _operations[opCode]();
+                await _operations[opCode]();
             }
 
             return this;
@@ -132,39 +133,45 @@ namespace AdventOfCode2019.Day7
             return opCode % 100;
         }
 
-        private void Add()
+        private async Task Add()
         {
             var result = ReadParameter(1) + ReadParameter(2);
             WriteParameter(3, result);
 
             _programCounter += 4;
+
+            await Task.CompletedTask;
         }
 
-        private void Multiply()
+        private async Task Multiply()
         {
             var result = ReadParameter(1) * ReadParameter(2);
             WriteParameter(3, result);
 
             _programCounter += 4;
+
+            await Task.CompletedTask;
         }
 
-        private void Input()
+        private async Task Input()
         {
-            var input = _input.ReadInput();
+            var input = await _input.ReadInput();
 
             WriteParameter(1, input);
 
             _programCounter += 2;
         }
 
-        private void Output()
+        private async Task Output()
         {
             _output.Output(ReadParameter(1));
 
             _programCounter += 2;
+
+            await Task.CompletedTask;
         }
 
-        private void JumpIfTrue()
+        private async Task JumpIfTrue()
         {
             if (ReadParameter(1) != 0)
             {
@@ -174,9 +181,11 @@ namespace AdventOfCode2019.Day7
             {
                 _programCounter += 3;
             }
+
+            await Task.CompletedTask;
         }
 
-        private void JumpIfFalse()
+        private async Task JumpIfFalse()
         {
             if (ReadParameter(1) == 0)
             {
@@ -186,9 +195,11 @@ namespace AdventOfCode2019.Day7
             {
                 _programCounter += 3;
             }
+
+            await Task.CompletedTask;
         }
 
-        private void LessThan()
+        private async Task LessThan()
         {
             if (ReadParameter(1) < ReadParameter(2))
             {
@@ -200,9 +211,11 @@ namespace AdventOfCode2019.Day7
             }
 
             _programCounter += 4;
+
+            await Task.CompletedTask;
         }
 
-        private void Equals()
+        private async Task Equals()
         {
             if (ReadParameter(1) == ReadParameter(2))
             {
@@ -214,6 +227,8 @@ namespace AdventOfCode2019.Day7
             }
 
             _programCounter += 4;
+
+            await Task.CompletedTask;
         }
 
         public static int FindNounAndVerb(string filename, int targetResult)
@@ -228,6 +243,7 @@ namespace AdventOfCode2019.Day7
                         .Repair(1, noun)
                         .Repair(2, verb)
                         .Execute()
+                        .Result
                         .ReadMemory(0);
 
                     if (result == targetResult)
