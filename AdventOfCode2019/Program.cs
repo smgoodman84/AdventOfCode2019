@@ -5,6 +5,7 @@ using AdventOfCode2019.Day3;
 using AdventOfCode2019.Day4;
 using AdventOfCode2019.Day6;
 using AdventOfCode2019.Day7;
+using AdventOfCode2019.Day8;
 
 namespace AdventOfCode2019
 {
@@ -53,6 +54,12 @@ namespace AdventOfCode2019
                       
             var day7Part2Result = SignalMaximizer.GetMaximumFeedbackThrustSignal().Result;
             Console.WriteLine($"Day 7 Part 2: {day7Part2Result}");
+
+            var day8Part1Result = SpaceImage.LoadFromFile("Day8/SpaceImage.txt", 25, 6).FindLayerWithFewestZerosAndGetNumberOfOnesTimeNumberOfTwos();
+            Console.WriteLine($"Day 8 Part 1: {day8Part1Result}");
+
+            Console.WriteLine($"Day 8 Part 2:");
+            SpaceImage.LoadFromFile("Day8/SpaceImage.txt", 25, 6).RenderImage();
 
             Console.ReadKey();
         }

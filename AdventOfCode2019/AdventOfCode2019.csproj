@@ -25,5 +25,6 @@
   <ItemGroup>
     <Folder Include="Day7\" />
     <Folder Include="Day7\Intcode\" />
+    <Folder Include="Day8\" />
   </ItemGroup>
 </Project>
