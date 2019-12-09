@@ -61,6 +61,9 @@ namespace AdventOfCode2019
             Console.WriteLine($"Day 8 Part 2:");
             SpaceImage.LoadFromFile("Day8/SpaceImage.txt", 25, 6).RenderImage();
 
+            Console.WriteLine($"Day 9 Part 1:");
+            Day9.Intcode.LoadFromFile("Day9/Boost.txt").SetInput(new Day9.PreparedInput(1)).Execute().Wait();
+
             Console.ReadKey();
         }
     }
