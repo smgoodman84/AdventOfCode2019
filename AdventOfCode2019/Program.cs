@@ -64,6 +64,9 @@ namespace AdventOfCode2019
             Console.WriteLine($"Day 9 Part 1:");
             Day9.Intcode.LoadFromFile("Day9/Boost.txt").SetInput(new Day9.PreparedInput(1)).Execute().Wait();
 
+            Console.WriteLine($"Day 9 Part 2:");
+            Day9.Intcode.LoadFromFile("Day9/Boost.txt").SetInput(new Day9.PreparedInput(2)).Execute().Wait();
+
             Console.ReadKey();
         }
     }
