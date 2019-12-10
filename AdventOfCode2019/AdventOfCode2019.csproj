@@ -32,7 +32,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Day10" />
     <Folder Include="Day07\" />
     <Folder Include="Day07\Intcode\" />
     <Folder Include="Day08\" />

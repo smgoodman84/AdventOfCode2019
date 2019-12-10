@@ -6,6 +6,7 @@ using AdventOfCode2019.Day06;
 using AdventOfCode2019.Day07;
 using AdventOfCode2019.Day08;
 using AdventOfCode2019.Day09.Intcode;
+using AdventOfCode2019.Day10;
 using Intcode = AdventOfCode2019.Day02.Intcode;
 
 namespace AdventOfCode2019
@@ -68,6 +69,9 @@ namespace AdventOfCode2019
             Console.WriteLine($"Day 9 Part 2:");
             Day09.Intcode.Intcode.LoadFromFile("Day09/Boost.txt").SetInput(new PreparedInput(2)).Execute().Wait();
 
+            var day10Part1Result = AsteroidMap.LoadFromFile("Day10/AsteroidMap.txt").GetMaximumVisibility();
+            Console.WriteLine($"Day 10 Part 1: {day10Part1Result}");
+            
             Console.ReadKey();
         }
     }
