@@ -77,6 +77,9 @@ namespace AdventOfCode2019
 
             var day11Part1Result = new Day11.Robot().Execute().GetEverWhiteCount();
             Console.WriteLine($"Day 11 Part 1: {day11Part1Result}");
+            
+            Console.WriteLine($"Day 11 Part 2:");
+            new Day11.Robot().StartOnWhite().Execute().RenderHull();
 
             Console.ReadKey();
         }

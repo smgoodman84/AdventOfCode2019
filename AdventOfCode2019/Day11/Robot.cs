@@ -66,6 +66,30 @@ namespace AdventOfCode2019.Day11
             {
                 return _wasEverWhitePanels.Count;
             }
+
+            public void Render()
+            {
+                var minX = _whitePanels.Min(p => p.X);
+                var minY = _whitePanels.Min(p => p.Y);
+                var maxX = _whitePanels.Max(p => p.X);
+                var maxY = _whitePanels.Max(p => p.Y);
+
+                foreach (var y in Enumerable.Range(minY, maxY - minY + 1).Reverse())
+                {
+                    foreach (var x in Enumerable.Range(minX, maxX - minX + 1))
+                    {
+                        if (IsWhite(new Point(x, y)))
+                        {
+                            Console.Write("#");
+                        }
+                        else
+                        {
+                            Console.Write(" ");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+            }
         }
         
         private readonly HullCanvas _hull = new HullCanvas();
@@ -88,7 +112,19 @@ namespace AdventOfCode2019.Day11
             _controller.SetOutput(_controllerToRobotPipe);
             
         }
-        
+
+        public Robot StartOnWhite()
+        {
+            _hull.SetColour(_location, White);
+            return this;
+        }
+
+        public Robot RenderHull()
+        {
+            _hull.Render();
+            return this;
+        }
+
         public Robot Execute()
         {
                 
