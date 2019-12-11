@@ -74,7 +74,10 @@ namespace AdventOfCode2019
 
             var day10Part2Result = AsteroidMap.LoadFromFile("Day10/AsteroidMap.txt").GetNthDestroyedAsteroidLocation(200);
             Console.WriteLine($"Day 10 Part 2: {day10Part2Result}");
-            
+
+            var day11Part1Result = new Day11.Robot().Execute().GetEverWhiteCount();
+            Console.WriteLine($"Day 11 Part 1: {day11Part1Result}");
+
             Console.ReadKey();
         }
     }
