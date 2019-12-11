@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -44,6 +46,15 @@ namespace AdventOfCode2019.Day10
                 .First();
         }
 
+        private Asteroid GetMaximumVisibilityAsteroid()
+        {
+            return _asteroids
+                .Select(a => (a, VisibleFrom(a).Count()))
+                .OrderByDescending(x => x.Item2)
+                .Select(x => x.Item1)
+                .First();
+        }
+
         private IEnumerable<Asteroid> VisibleFrom(Asteroid originAsteroid)
         {
             var asteroids = _asteroids.Where(a => a != originAsteroid).ToList();
@@ -55,6 +66,67 @@ namespace AdventOfCode2019.Day10
                 {
                     yield return asteroidToSee;
                 }
+            }
+        }
+
+        public int GetNthDestroyedAsteroidLocation(int n, bool render = true)
+        {
+            var orderedAsteroids = DestroyInOrder()
+                .ToList();
+
+            if (render)
+            {
+                var renderList = orderedAsteroids
+                    .Select((a, i) => (a, i + 1))
+                    .OrderBy(x => x.Item1.Y)
+                    .ThenBy(x => x.Item1.X)
+                    .ToArray();
+
+                var index = 0;
+                foreach (var y in Enumerable.Range(0, orderedAsteroids.Max(a => a.Y) + 1))
+                {
+                    Console.WriteLine();
+                    Console.Write($"{(y + 1).ToString().PadLeft(2, ' ')}: ");
+                    foreach (var x in Enumerable.Range(0, orderedAsteroids.Max(a => a.X) + 1))
+                    {
+                        if (index < renderList.Length
+                            && x == renderList[index].a.X
+                            && y == renderList[index].a.Y)
+                        {
+                            Console.Write($"[{renderList[index].Item2.ToString().PadLeft(3, ' ')}]");
+                            index += 1;
+                        }
+                        else
+                        {
+                            Console.Write("-   -");
+                        }
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+
+            var asteroid = orderedAsteroids.Skip(n - 1).First();
+
+            return (asteroid.X + 1) * 100 + (asteroid.Y + 1);
+        }
+
+        private IEnumerable<Asteroid> DestroyInOrder()
+        {
+            var laserAsteroid = GetMaximumVisibilityAsteroid();
+            
+            while (_asteroids.Any(a => a != laserAsteroid))
+            {
+                var visibleAsteroids = VisibleFrom(laserAsteroid).ToList();
+                var orderedAsteroids = visibleAsteroids.OrderBy(a => a.AngleFrom(laserAsteroid)).ToList();
+
+                foreach (var asteroid in orderedAsteroids)
+                {
+                    _asteroids.Remove(asteroid);
+                    yield return asteroid;
+                }
+
+                //break;
             }
         }
 
@@ -102,6 +174,18 @@ namespace AdventOfCode2019.Day10
             {
                 X = x;
                 Y = y;
+            }
+
+            public double AngleFrom(Asteroid laserAsteroid)
+            {
+                double x = X - laserAsteroid.X;
+                double y = Y - laserAsteroid.Y;
+                var angle = Math.Atan2(x, -y) * 180 / Math.PI;
+                if (angle < 0)
+                {
+                    angle += 360;
+                }
+                return angle;
             }
         }
     }

@@ -71,6 +71,9 @@ namespace AdventOfCode2019
 
             var day10Part1Result = AsteroidMap.LoadFromFile("Day10/AsteroidMap.txt").GetMaximumVisibility();
             Console.WriteLine($"Day 10 Part 1: {day10Part1Result}");
+
+            var day10Part2Result = AsteroidMap.LoadFromFile("Day10/AsteroidMap.txt").GetNthDestroyedAsteroidLocation(200);
+            Console.WriteLine($"Day 10 Part 2: {day10Part2Result}");
             
             Console.ReadKey();
         }
