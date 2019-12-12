@@ -90,8 +90,8 @@ namespace AdventOfCode2019.Day10
                     foreach (var x in Enumerable.Range(0, orderedAsteroids.Max(a => a.X) + 1))
                     {
                         if (index < renderList.Length
-                            && x == renderList[index].a.X
-                            && y == renderList[index].a.Y)
+                            && x == renderList[index].Item1.X
+                            && y == renderList[index].Item1.Y)
                         {
                             Console.Write($"[{renderList[index].Item2.ToString().PadLeft(3, ' ')}]");
                             index += 1;
