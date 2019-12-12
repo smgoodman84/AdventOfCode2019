@@ -85,6 +85,9 @@ namespace AdventOfCode2019
             var day12Part1Result  = GravitationalEnergy.LoadFromFile("Day12/MoonLocations.txt").Simulate(1000).GetTotalEnergy();
             Console.WriteLine($"Day 12 Part 1: {day12Part1Result}");
 
+            var day12Part2Result = GravitationalEnergy.LoadFromFile("Day12/MoonLocations.txt").FindCycle();
+            Console.WriteLine($"Day 12 Part 2: {day12Part2Result}");
+
             Console.ReadKey();
         }
     }
