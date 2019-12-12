@@ -7,6 +7,7 @@ using AdventOfCode2019.Day07;
 using AdventOfCode2019.Day08;
 using AdventOfCode2019.Day09.Intcode;
 using AdventOfCode2019.Day10;
+using AdventOfCode2019.Day12;
 using Intcode = AdventOfCode2019.Day02.Intcode;
 
 namespace AdventOfCode2019
@@ -80,6 +81,9 @@ namespace AdventOfCode2019
             
             Console.WriteLine($"Day 11 Part 2:");
             new Day11.Robot().StartOnWhite().Execute().RenderHull();
+            
+            var day12Part1Result  = GravitationalEnergy.LoadFromFile("Day12/MoonLocations.txt").Simulate(1000).GetTotalEnergy();
+            Console.WriteLine($"Day 12 Part 1: {day12Part1Result}");
 
             Console.ReadKey();
         }
