@@ -8,6 +8,7 @@ using AdventOfCode2019.Day08;
 using AdventOfCode2019.Day09.Intcode;
 using AdventOfCode2019.Day10;
 using AdventOfCode2019.Day12;
+using AdventOfCode2019.Day13;
 using Intcode = AdventOfCode2019.Day02.Intcode;
 
 namespace AdventOfCode2019
@@ -87,6 +88,9 @@ namespace AdventOfCode2019
 
             var day12Part2Result = GravitationalEnergy.LoadFromFile("Day12/MoonLocations.txt").FindCycle();
             Console.WriteLine($"Day 12 Part 2: {day12Part2Result}");
+
+            var day13Part1Result = Game.LoadFromFile("Day13/Game.txt").Execute().CountCharacters(2);
+            Console.WriteLine($"Day 13 Part 1: {day13Part1Result}");
 
             Console.ReadKey();
         }

@@ -15,6 +15,11 @@ namespace AdventOfCode2019.Day09.Intcode
             _enumerationSemaphore.Release();
         }
 
+        public bool HasInputToRead()
+        {
+            return pipe.Count > 0;
+        }
+
         public async Task<long> ReadInput()
         {
             await _enumerationSemaphore.WaitAsync();
