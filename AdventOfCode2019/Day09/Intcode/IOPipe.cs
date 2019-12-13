@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,8 +12,11 @@ namespace AdventOfCode2019.Day09.Intcode
 
         public void Output(long output)
         {
-            pipe.Enqueue(output);
-            _enumerationSemaphore.Release();
+            lock (pipe)
+            {
+                pipe.Enqueue(output);
+                _enumerationSemaphore.Release();
+            }
         }
 
         public bool HasInputToRead()
@@ -23,7 +27,10 @@ namespace AdventOfCode2019.Day09.Intcode
         public async Task<long> ReadInput()
         {
             await _enumerationSemaphore.WaitAsync();
-            return pipe.Dequeue();
+            lock (pipe)
+            {
+                return pipe.Dequeue();
+            }
         }
     }
 }

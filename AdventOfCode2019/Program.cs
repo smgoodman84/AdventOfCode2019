@@ -91,6 +91,9 @@ namespace AdventOfCode2019
 
             var day13Part1Result = Game.LoadFromFile("Day13/Game.txt").Execute().CountCharacters(2);
             Console.WriteLine($"Day 13 Part 1: {day13Part1Result}");
+            
+            var day13Part2Result = Game.LoadFromFile("Day13/Game.txt").ExecuteWithInput().GetScore();
+            Console.WriteLine($"Day 13 Part 2: {day13Part2Result}");
 
             Console.ReadKey();
         }
