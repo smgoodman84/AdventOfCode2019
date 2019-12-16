@@ -42,6 +42,12 @@
     <None Update="Day13\GameInput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Day15\RepairDroid.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Day16\Signal.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Day1\ModuleMasses.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -69,10 +75,14 @@
     <None Update="Day11\RobotController.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Day14\Reactions.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Day07\" />
     <Folder Include="Day07\Intcode\" />
     <Folder Include="Day08\" />
+    <Folder Include="Day14\" />
   </ItemGroup>
 </Project>
