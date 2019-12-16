@@ -96,8 +96,11 @@ namespace AdventOfCode2019
             var day13Part2Result = Game.LoadFromFile("Day13/Game.txt").ExecuteWithInput().GetScore();
             Console.WriteLine($"Day 13 Part 2: {day13Part2Result}");
 
-            var day15Part1Result = new OxygenSystemLocater().GetShortestRoutToOxygen();
+            var day15Part1Result = new OxygenSystemLocater().GetShortestRouteToOxygen();
             Console.WriteLine($"Day 15 Part 1: {day15Part1Result}");
+
+            var day15Part2Result = new OxygenSystemLocater().GetTimeToFillWithOxygen();
+            Console.WriteLine($"Day 15 Part 2: {day15Part2Result}");
 
             Console.ReadKey();
         }

@@ -13,7 +13,12 @@ namespace AdventOfCode2019.Day15
         private IOPipe _repairDroidInput { get; set; }
         private IOPipe _repairDroidOutput { get; set; }
         private Map _map { get; set; }
-        private Point _position = new Point(0, 0); 
+        private Point _position = new Point(0, 0);
+
+        private bool _foundOxygen = false;
+        private Point _oxygenLocation = new Point(0, 0);
+        private List<Direction> _oxygenToHomePath = new List<Direction>();
+        private List<Point> _trail = new List<Point>();
 
         private enum Direction
         {
@@ -40,63 +45,91 @@ namespace AdventOfCode2019.Day15
             _map = new Map();
         }
 
-        public int GetShortestRoutToOxygen()
+        public int GetShortestRouteToOxygen()
         {
-            Explore().Wait();
+            Explore(false).Wait();
             return _oxygenToHomePath.Count;
         }
 
-        private async Task Explore()
+        public int GetTimeToFillWithOxygen()
+        {
+            Explore(true).Wait();
+
+            var frontier = new List<Point>()
+            {
+                _oxygenLocation
+            };
+
+            var iterations = 0;
+            while (frontier.Any())
+            {
+                foreach (var location in frontier.ToList())
+                {
+                    var adjacentLocations = new List<Point>
+                    {
+                        new Point(location.X, location.Y + 1),
+                        new Point(location.X, location.Y - 1),
+                        new Point(location.X + 1, location.Y),
+                        new Point(location.X - 1, location.Y),
+                    };
+
+                    foreach (var locationToCheck in adjacentLocations)
+                    {
+                        if (_map.GetMapStatus(locationToCheck) == Map.MapStatus.Passable)
+                        {
+                            _map.MapLocation(locationToCheck, Map.MapStatus.Oxygen);
+                            frontier.Add(locationToCheck);
+                        }
+                    }
+
+                    frontier.Remove(location);
+                }
+
+                iterations += 1;
+            }
+
+            return iterations - 1;
+        }
+
+        private async Task Explore(bool exploreEverywhere)
         {
             _map.MapLocation(_position, Map.MapStatus.Passable);
             _repairDroid.Execute();
-            await ExploreAllDirectionsAndReturn();
+            await ExploreAllDirectionsAndReturn(exploreEverywhere);
             _map.Render(_position, _trail);
-
-            foreach (var direction in _oxygenToHomePath)
-            {
-                //Console.WriteLine($"{direction}");
-            }
         }
 
-        private async Task ExploreAllDirectionsAndReturn()
+        private async Task ExploreAllDirectionsAndReturn(bool exploreEverywhere)
         {
-            await Explore(Direction.North, Direction.South);
-            await Explore(Direction.East, Direction.West);
-            await Explore(Direction.South, Direction.North);
-            await Explore(Direction.West, Direction.East);
+            await Explore(Direction.North, Direction.South, exploreEverywhere);
+            await Explore(Direction.East, Direction.West, exploreEverywhere);
+            await Explore(Direction.South, Direction.North, exploreEverywhere);
+            await Explore(Direction.West, Direction.East, exploreEverywhere);
         }
 
-        private List<Direction> _oxygenToHomePath = new List<Direction>();
-        private List<Point> _trail = new List<Point>();
-
-        private async Task Explore(Direction direction, Direction reverseDirection)
+        private async Task Explore(Direction direction, Direction reverseDirection, bool exploreEverywhere)
         {
             var moved = false;
 
-            if (!_foundOxygen && _map.GetMapStatus(GetNewLocation(direction)) == Map.MapStatus.Unmapped)
+            if ((!_foundOxygen || exploreEverywhere) && _map.GetMapStatus(GetNewLocation(direction)) == Map.MapStatus.Unmapped)
             {
                 moved = await TryMove(direction);
                 if (moved)
                 {
-                    //Console.WriteLine($"Moved {direction}");
-                    await ExploreAllDirectionsAndReturn();
+                    await ExploreAllDirectionsAndReturn(exploreEverywhere);
                 }
             }
 
             if (moved)
             {
-                //Console.WriteLine($"Return  {reverseDirection}");
                 await TryMove(reverseDirection);
-                if (_foundOxygen)
+                if (_foundOxygen && !exploreEverywhere)
                 {
                     _oxygenToHomePath.Add(reverseDirection);
                     _trail.Add(_position);
                 }
             }
         }
-
-        private bool _foundOxygen = false;
 
         private async Task<bool> TryMove(Direction direction)
         {
@@ -111,6 +144,7 @@ namespace AdventOfCode2019.Day15
                     return false;
                 case StatusCode.FoundOxygenSystem:
                     _foundOxygen = true;
+                    _oxygenLocation = newLocation;
                     _map.MapLocation(newLocation, Map.MapStatus.Oxygen);
                     _position = newLocation;
                     return true;
@@ -157,14 +191,8 @@ namespace AdventOfCode2019.Day15
                 {
                     _map.Add(location.X, new Dictionary<int, MapStatus>());
                 }
-                if (!_map[location.X].ContainsKey(location.Y))
-                {
-                    _map[location.X][location.Y] = status;
-                }
-                else
-                {
-                    //throw new Exception($"Already mapped {location.X},{location.Y}");
-                }
+
+                _map[location.X][location.Y] = status;
             }
 
             public MapStatus GetMapStatus(Point location)
@@ -187,8 +215,6 @@ namespace AdventOfCode2019.Day15
                 var xMax = _map.Keys.Max();
                 var yMin = _map.SelectMany(x => x.Value.Keys).Min();
                 var yMax = _map.SelectMany(x => x.Value.Keys).Max();
-
-                Console.WriteLine($"Rendering {xMin},{yMin} -> {xMax},{yMax}");
 
                 for(var y = yMax; y >= yMin; y--)
                 {
