@@ -10,6 +10,7 @@ using AdventOfCode2019.Day10;
 using AdventOfCode2019.Day12;
 using AdventOfCode2019.Day13;
 using AdventOfCode2019.Day15;
+using AdventOfCode2019.Day16;
 using Intcode = AdventOfCode2019.Day02.Intcode;
 
 namespace AdventOfCode2019
@@ -101,6 +102,9 @@ namespace AdventOfCode2019
 
             var day15Part2Result = new OxygenSystemLocater().GetTimeToFillWithOxygen();
             Console.WriteLine($"Day 15 Part 2: {day15Part2Result}");
+            
+            var day16Part1Result = FlawedFrequencyTransmission.LoadFromFile("Day16/Signal.txt").ProcessSignal(100);
+            Console.WriteLine($"Day 16 Part 1: {day16Part1Result}");
 
             Console.ReadKey();
         }
