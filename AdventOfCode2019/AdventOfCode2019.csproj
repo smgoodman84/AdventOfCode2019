@@ -42,6 +42,9 @@
     <None Update="Day13\GameInput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Day15\RepairDroid.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Day1\ModuleMasses.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
