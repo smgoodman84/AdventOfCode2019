@@ -8,7 +8,7 @@ namespace AdventOfCode2019.Day14
     {
         private class Chemical
         {
-            public int Quantity { get; set; }
+            public long Quantity { get; set; }
             public string Name { get; set; }
 
             public Chemical(string input)
@@ -18,18 +18,18 @@ namespace AdventOfCode2019.Day14
                 Name = values[1];
             }
 
-            public Chemical(string name, int quantity)
+            public Chemical(string name, long quantity)
             {
                 Name = name;
                 Quantity = quantity;
             }
 
-            public void Subtract(int n)
+            public void Subtract(long n)
             {
                 Quantity -= n;
             }
 
-            public void Add(int n)
+            public void Add(long n)
             {
                 Quantity += n;
             }
@@ -80,15 +80,28 @@ namespace AdventOfCode2019.Day14
             _reactions = reactions.ToList();
         }
 
-        private int _oreUsed = 0;
+        private long _oreUsed = 0;
         private List<Chemical> _availableChemicals = new List<Chemical>();
 
-        public int OreRequiredForChemical(string name, int quantity)
+        public long OreRequiredForChemical(string name, long quantity)
         {
             var requiredChemical = new Chemical(name, quantity);
             SetProducedBy(requiredChemical);
             ExecuteReactions(requiredChemical);
             return _oreUsed;
+        }
+
+        public long MaximumChemicalWithOre(string name, long oreQuantity)
+        {
+            var requiredChemical = new Chemical(name, 1);
+            _availableChemicals.Add(new Chemical("ORE", oreQuantity));
+            SetProducedBy(requiredChemical);
+            while (ExecuteReactionsForMaximumChemical(requiredChemical))
+            {
+                requiredChemical.Add(1);
+            }
+
+            return _availableChemicals.First(c => c.Name == name).Quantity;
         }
 
         private void SetProducedBy(Chemical chemical)
@@ -143,6 +156,39 @@ namespace AdventOfCode2019.Day14
 
             available.Add(reaction.Output.Quantity);
             ExecuteReactions(chemical);
+        }
+
+        private bool ExecuteReactionsForMaximumChemical(Chemical chemical)
+        {
+            if (chemical.Name == "ORE")
+            {
+                return true;
+            }
+
+            var available = GetAvailable(chemical.Name);
+            if (available.Quantity >= chemical.Quantity)
+            {
+                return true;
+            }
+
+            var reaction = chemical.ProducedBy;
+            foreach (var input in reaction.Inputs)
+            {
+                if (!ExecuteReactionsForMaximumChemical(input))
+                {
+                    return false;
+                }
+                var availableInput = GetAvailable(input.Name);
+
+                if (availableInput.Quantity < input.Quantity)
+                {
+                    return false;
+                }
+                availableInput.Subtract(input.Quantity);
+            }
+
+            available.Add(reaction.Output.Quantity);
+            return ExecuteReactionsForMaximumChemical(chemical);
         }
     }
 }
