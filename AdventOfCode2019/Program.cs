@@ -12,6 +12,7 @@ using AdventOfCode2019.Day13;
 using AdventOfCode2019.Day14;
 using AdventOfCode2019.Day15;
 using AdventOfCode2019.Day16;
+using AdventOfCode2019.Day17;
 using Intcode = AdventOfCode2019.Day02.Intcode;
 
 namespace AdventOfCode2019
@@ -113,6 +114,9 @@ namespace AdventOfCode2019
             var day16Part1Result = FlawedFrequencyTransmission.LoadFromFile("Day16/Signal.txt").ProcessSignal(100);
             Console.WriteLine($"Day 16 Part 1: {day16Part1Result}");
             
+            var day17Part1Result = new Scaffold().GetSumOfAlignmentParameters();
+            Console.WriteLine($"Day 17 Part 1: {day17Part1Result}");
+
             Console.ReadKey();
         }
     }
