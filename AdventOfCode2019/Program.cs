@@ -18,7 +18,7 @@ namespace AdventOfCode2019
     class Program
     {
         static void Main(string[] args)
-        {
+        {/*
             var fuelRequirements = FuelRequirements.LoadFromFile("Day01/ModuleMasses.txt").GetFuelRequirements();
             Console.WriteLine($"Day 1 Part 1: {fuelRequirements}");
 
@@ -105,6 +105,9 @@ namespace AdventOfCode2019
             
             var day16Part1Result = FlawedFrequencyTransmission.LoadFromFile("Day16/Signal.txt").ProcessSignal(100);
             Console.WriteLine($"Day 16 Part 1: {day16Part1Result}");
+            */
+            var day16Part2Result = FlawedFrequencyTransmission.LoadFromFile("Day16/Signal.txt").ProcessRepeatedSignal(100, 10000);
+            Console.WriteLine($"Day 16 Part 2: {day16Part2Result}");
 
             Console.ReadKey();
         }
