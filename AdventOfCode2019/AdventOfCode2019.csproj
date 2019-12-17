@@ -75,10 +75,18 @@
     <None Update="Day11\RobotController.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Day14\Reactions.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Day17\ASCII.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Day07\" />
     <Folder Include="Day07\Intcode\" />
     <Folder Include="Day08\" />
+    <Folder Include="Day14\" />
+    <Folder Include="Day17\" />
   </ItemGroup>
 </Project>
