@@ -13,6 +13,7 @@ using AdventOfCode2019.Day14;
 using AdventOfCode2019.Day15;
 using AdventOfCode2019.Day16;
 using AdventOfCode2019.Day17;
+using AdventOfCode2019.Day19;
 using Intcode = AdventOfCode2019.Day02.Intcode;
 
 namespace AdventOfCode2019
@@ -122,6 +123,9 @@ namespace AdventOfCode2019
             
             var day17Part2Result = new Scaffold().CollectSpaceDust().Result;
             Console.WriteLine($"Day 17 Part 2: {day17Part2Result}");
+            
+            var day19Part1Result = new TractorMapper().GetTractorArea(50);
+            Console.WriteLine($"Day 19 Part 1: {day19Part1Result}");
 
             Console.ReadKey();
         }

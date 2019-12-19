@@ -48,6 +48,9 @@
     <None Update="Day16\Signal.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Day19\DroneController.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Day1\ModuleMasses.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
