@@ -71,7 +71,7 @@ namespace AdventOfCode2019.Day16
 
         public IEnumerable<int> GetInputForPhase(int phase, int repetition)
         {
-            Console.WriteLine($"Starting input for Phase {phase}");
+            //Console.WriteLine($"Starting input for Phase {phase}");
             if (phase == 0)
             {
                 for (var i = 0; i < _originalSignal.Length * repetition; i++)
@@ -102,7 +102,7 @@ namespace AdventOfCode2019.Day16
                     yield return Math.Abs(total) % 10;
                 }
             }
-            Console.WriteLine($"Completed input for Phase {phase}");
+            //Console.WriteLine($"Completed input for Phase {phase}");
         }
 
         private IEnumerable<int> PatternForOutputElement(int elementNumber)

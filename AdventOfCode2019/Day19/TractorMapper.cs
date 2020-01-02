@@ -41,8 +41,6 @@ namespace AdventOfCode2019.Day19
                     _droneInput.Output(x);
                     _droneInput.Output(y);
 
-                    Console.WriteLine($"Scanning {x},{y}");
-
                     var isPulled = await _droneOutput.ReadInput();
                     pullCount += isPulled;
                 }

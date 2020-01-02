@@ -34,17 +34,22 @@ namespace AdventOfCode2019.Day13
             _game.SetOutput(_gameOutput);
         }
 
-        public Game Execute()
+        public Game Execute(bool render)
         {
-            ExecuteAsync().Wait();
+            ExecuteAsync(render).Wait();
             return this;
         }
 
-        private async Task ExecuteAsync()
+        private async Task ExecuteAsync(bool render)
         {
+            _render = render;
             await _game.Execute();
-            
-            Console.Clear();
+
+            if (_render)
+            {
+                Console.Clear();
+            }
+
             while (_gameOutput.HasInputToRead())
             {
                 var x = (int)await _gameOutput.ReadInput();
@@ -53,12 +58,16 @@ namespace AdventOfCode2019.Day13
 
                 Render(x, y, _characters[character]);
             }
-            Console.WriteLine();
+
+            if (_render)
+            {
+                Console.WriteLine();
+            }
         }
 
-        public Game ExecuteWithInput()
+        public Game ExecuteWithInput(bool render)
         {
-            ExecuteWithInputAsync().Wait();
+            ExecuteWithInputAsync(render).Wait();
             return this;
         }
 
@@ -82,15 +91,20 @@ namespace AdventOfCode2019.Day13
         private int _paddleX;
         private int _ballX;
         private Task _gameTask;
-        private async Task ExecuteWithInputAsync()
+        private bool _render;
+        private async Task ExecuteWithInputAsync(bool render)
         {
+            _render = render;
             _game.Repair(0, 2);
             _game.SetInput(_gameInput);
             _gameTask = _game.Execute();
 
             var inputTask = HandleInput();
-            
-            Console.Clear();
+
+            if (_render)
+            {
+                Console.Clear();
+            }
             SetScore(0);
             while (!_gameTask.IsCompleted || _gameOutput.HasInputToRead())
             {
@@ -117,7 +131,10 @@ namespace AdventOfCode2019.Day13
                     Render(x, y + 2, _characters[character]);
                 }
             }
-            Console.WriteLine();
+            if (_render)
+            {
+                Console.WriteLine();
+            }
         }
 
 
@@ -211,7 +228,7 @@ namespace AdventOfCode2019.Day13
             });
         }
 
-        public int CountCharacters(int character)
+        public int CountCharacters(char character)
         {
             var result = _canvas.SelectMany(x => x.Value.Values)
                 .Count(c => c == character);
@@ -234,7 +251,12 @@ namespace AdventOfCode2019.Day13
             {
                 _canvas[x][y] = character;
             }
-            
+
+            if (!_render)
+            {
+                return;
+            }
+
             Console.SetCursorPosition(x, y + 1);
             Console.Write(character);
             Console.SetCursorPosition(0, 0);

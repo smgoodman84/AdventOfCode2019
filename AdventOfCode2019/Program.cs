@@ -75,13 +75,13 @@ namespace AdventOfCode2019
 
             Console.WriteLine($"Day 9 Part 2:");
             Day09.Intcode.Intcode.LoadFromFile("Day09/Boost.txt").SetInput(new PreparedInput(2)).Execute().Wait();
-
+            
             var day10Part1Result = AsteroidMap.LoadFromFile("Day10/AsteroidMap.txt").GetMaximumVisibility();
             Console.WriteLine($"Day 10 Part 1: {day10Part1Result}");
 
-            var day10Part2Result = AsteroidMap.LoadFromFile("Day10/AsteroidMap.txt").GetNthDestroyedAsteroidLocation(200);
-            Console.WriteLine($"Day 10 Part 2: {day10Part2Result}");
-
+            //var day10Part2Result = AsteroidMap.LoadFromFile("Day10/AsteroidMap.txt").GetNthDestroyedAsteroidLocation(200);
+            //Console.WriteLine($"Day 10 Part 2: {day10Part2Result}");
+            
             var day11Part1Result = new Day11.Robot().Execute().GetEverWhiteCount();
             Console.WriteLine($"Day 11 Part 1: {day11Part1Result}");
             
@@ -93,11 +93,11 @@ namespace AdventOfCode2019
 
             var day12Part2Result = GravitationalEnergy.LoadFromFile("Day12/MoonLocations.txt").FindCycle();
             Console.WriteLine($"Day 12 Part 2: {day12Part2Result}");
-
-            var day13Part1Result = Game.LoadFromFile("Day13/Game.txt").Execute().CountCharacters(2);
+            
+            var day13Part1Result = Game.LoadFromFile("Day13/Game.txt").Execute(false).CountCharacters('+');
             Console.WriteLine($"Day 13 Part 1: {day13Part1Result}");
             
-            var day13Part2Result = Game.LoadFromFile("Day13/Game.txt").ExecuteWithInput().GetScore();
+            var day13Part2Result = Game.LoadFromFile("Day13/Game.txt").ExecuteWithInput(false).GetScore();
             Console.WriteLine($"Day 13 Part 2: {day13Part2Result}");
             
             var day14Part1Result = OreForFuelCalculator.LoadFromFile("Day14/Reactions.txt").OreRequiredForChemical("FUEL", 1);
@@ -115,8 +115,8 @@ namespace AdventOfCode2019
             var day16Part1Result = FlawedFrequencyTransmission.LoadFromFile("Day16/Signal.txt").ProcessSignal(100);
             Console.WriteLine($"Day 16 Part 1: {day16Part1Result}");
             
-            var day16Part2Result = FlawedFrequencyTransmission.LoadFromFile("Day16/Signal.txt").ProcessRepeatedSignal(100, 10000);
-            Console.WriteLine($"Day 16 Part 2: {day16Part2Result}");
+            //var day16Part2Result = FlawedFrequencyTransmission.LoadFromFile("Day16/Signal.txt").ProcessRepeatedSignal(100, 10000);
+            //Console.WriteLine($"Day 16 Part 2: {day16Part2Result}");
             
             var day17Part1Result = new Scaffold().GetSumOfAlignmentParameters();
             Console.WriteLine($"Day 17 Part 1: {day17Part1Result}");
@@ -126,7 +126,7 @@ namespace AdventOfCode2019
             
             var day19Part1Result = new TractorMapper().GetTractorArea(50);
             Console.WriteLine($"Day 19 Part 1: {day19Part1Result}");
-
+            
             Console.ReadKey();
         }
     }
